@@ -1,0 +1,20 @@
+{
+  "name": "project-2",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "rm -rf .parcel-cache&&parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "parcel": "^2.16.4",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "react-router-dom": "^6.30.1"
+  }
+}
