@@ -1,7 +1,7 @@
 import { image_URL } from "../../utlis/Links";
-
+// import RestaurantMenuRec from "./Resmenurec";
 const RestaurantInfo = ({ menu }) => {
-  console.log(menu?.data?.cards[2]?.card?.card?.info);
+  // console.log(menu?.data?.cards[2]?.card?.card?.info);
   const {
     name,
     avgRatingString,
@@ -49,6 +49,7 @@ const RestaurantInfo = ({ menu }) => {
         </div>
 
         <p className="delivery-time">🚴 {sla?.deliveryTime} mins</p>
+        {/* <RestaurantMenuRec /> */}
       </div>
     </div>
   );
