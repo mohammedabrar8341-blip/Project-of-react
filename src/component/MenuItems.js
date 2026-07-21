@@ -3,20 +3,11 @@ import { Menu_URL } from "../../utlis/Links";
 import { useParams } from "react-router-dom";
 import RestaurantInfo from "./RestaurantInfo";
 import Rescategory from "./Rescategory";
+import UseMenuItems from "../../utlis/UseMenuItems"; "../../utlis/UseRestaurantMenu";
 
 const MenuItems = () => {
   const { resId } = useParams();
-  const [menu, setmenu] = useState(null);
-
-  useEffect(() => {
-    getRestrec();
-  }, []);
-
-  const getRestrec = async () => {
-    const result = await fetch(Menu_URL + resId);
-    const json = await result.json();
-    setmenu(json);
-  };
+ const menu =UseMenuItems(resId)
 
   if (menu == null) {
     return <div>loading....</div>;

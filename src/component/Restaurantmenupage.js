@@ -5,22 +5,12 @@ import { Shimmer } from "./Shimmer";
 import RestaurantInfo from "./RestaurantInfo";
 import Rescategory from "./Rescategory";
 import MenuItems from "./MenuItems";
+import UseRestaurantMenu from "../../utlis/UseRestaurantMenu";
 
 const ResturantPage = () => {
   const { resId } = useParams();
 
-  const [menu, setMenu] = useState(null);
-
-  useEffect(() => {
-    getDataRes();
-  }, []);
-
-  const getDataRes = async () => {
-    const response = await fetch(Menu_URL + resId);
-    const data = await response.json();
-    setMenu(data);
-  };
-
+  const menu = UseRestaurantMenu(resId);
 
   if (menu == null) {
     return <Shimmer />;
@@ -30,9 +20,7 @@ const ResturantPage = () => {
     <div>
       <RestaurantInfo menu={menu} />
 
-      
       <MenuItems />
-    
     </div>
   );
 };

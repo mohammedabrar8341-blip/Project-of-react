@@ -4,35 +4,10 @@ import { Shimmer } from "./Shimmer";
 import { Swiggy_URL } from "../../utlis/Links";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import UseBodyItems from "../../utlis/UseBodyItems";
 
 function Body() {
-  const [hotellist, setHotellist] = useState([]);
-
-  useEffect(() => {
-    getData();
-  }, []);
-  const getData = async () => {
-    const response = await fetch(Swiggy_URL);
-    const data = await response.json();
-    // console.log(data)
-    // console.log(
-    //   data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
-    //     ?.restaurants,
-    // );
-    // const details =
-    //   data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
-    //     ?.restaurants;
-    setHotellist(
-      data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants,
-    );
-    // console.log(
-    //   data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
-    //     ?.restaurants,
-    // );
-
-    // console.log("hotel", hotellist);
-  };
+  const hotellist=UseBodyItems()
   if (!hotellist.length) {
     return <Shimmer />;
   }
