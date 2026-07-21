@@ -8,12 +8,9 @@ const MenuItems = () => {
   const { resId } = useParams();
   const [menu, setmenu] = useState(null);
 
-
-
   useEffect(() => {
     getRestrec();
   }, []);
-
 
   const getRestrec = async () => {
     const result = await fetch(Menu_URL + resId);
@@ -25,24 +22,20 @@ const MenuItems = () => {
     return <div>loading....</div>;
   }
 
-  console.log("menu in menuitems", menu)
+  console.log("menu in menuitems", menu);
 
-  console.log( menu?.data?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards)
+  console.log(menu?.data?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards);
 
-  const categories =
-    menu?.data?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
-      (category) => {
-        
-        if (
-          category?.card?.card?.["@type"] ===
-          "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory" | category?.card?.card?.["@type"] === 'type.googleapis.com/swiggy.presentation.food.v2.NestedItemCategory'
-        ) {
-          return true;
-        } else {
-          return false;
-        }
-      },
+  const categories = (
+    menu?.data?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards || []
+  ).filter((category) => {
+    const type = category?.card?.card?.["@type"];
+    return (
+      type === "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory" ||
+      type ===
+        "type.googleapis.com/swiggy.presentation.food.v2.NestedItemCategory"
     );
+  });
 
   console.log("categories", categories);
 

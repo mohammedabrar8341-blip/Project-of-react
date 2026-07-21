@@ -1,8 +1,9 @@
 import MenuInfo from "./Menuinfo";
 import { useState } from "react";
+
 const Rescategory = ({ categoryInfo }) => {
-  const { title, itemCards } = categoryInfo;
-  console.log(itemCards);
+  const title = categoryInfo?.title || "";
+  const itemCards = categoryInfo?.itemCards || [];
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -16,21 +17,14 @@ const Rescategory = ({ categoryInfo }) => {
         <span>
           {title} ({itemCards.length})
         </span>
-        <span>⬇️</span>
+      <span className={isOpen ? "arrow open" : "arrow"}>▼</span>
       </div>
 
       {isOpen ? (
         <div className="category-body">
-          {itemCards.map((singleMenu) => {
-            return (
-              <MenuItem
-                details={singleMenu.card.info}
-                key={singleMenu.card.info.id}
-              />
-            );
-            {
-              console.log(details);
-            }
+          {itemCards.map((singleMenu, idx) => {
+            const details = singleMenu?.card?.info || {};
+            return <MenuInfo details={details} key={details.id || idx} />;
           })}
         </div>
       ) : (
@@ -39,4 +33,5 @@ const Rescategory = ({ categoryInfo }) => {
     </div>
   );
 };
+
 export default Rescategory;
