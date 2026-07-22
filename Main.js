@@ -11,6 +11,10 @@ import { Auth } from "./src/component/Auth";
 import { Signin } from "./src/component/Signin";
 import { Siginup } from "./src/component/Signup";
 import ResturantPage from "./src/component/Restaurantmenupage";
+import { lazy,Suspense } from "react";
+
+
+const Grocery=lazy(()=>import("./src/component/Grocery "))
 const appRouter = createBrowserRouter([
   {
     path: "/",
@@ -35,6 +39,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/restaurant/:resId",
         element: <ResturantPage />,
+      },
+      {
+        path:"/grocery ",
+        element:<Suspense fallback={<h1>loading....</h1>}><Grocery/></Suspense>
       },
       {
         path: "/auth",

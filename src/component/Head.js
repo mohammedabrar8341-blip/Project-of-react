@@ -22,7 +22,15 @@ function Header() {
       </div>
       <div className="list">
         <ul>
-          {isOnline ? <li> 🟢 Online </li> : <li> 🛑 Offline </li>}
+         {isOnline ? (
+            <li> 🟢 Online </li>
+          ) : (
+            <li className="red"> 🛑 Offline </li>
+          )}
+            <li>
+            <Link to={"/grocery "}>Grocery</Link>
+          </li>
+         
           <li>
             <Link to="/">Home</Link>
           </li>
@@ -32,6 +40,7 @@ function Header() {
           <li>
             <Link to="/contact">Contact</Link>
           </li>
+       
           <li>
             <Link to="/cart">Cart</Link>
           </li>

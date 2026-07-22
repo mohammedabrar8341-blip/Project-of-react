@@ -532,3 +532,12 @@
     font-size: 18px;
   }
 }
+
+/* online button */
+.red {
+  color: red;
+}
+
+.bg-green{
+  background-color: green;
+}
