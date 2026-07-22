@@ -1,21 +1,28 @@
 import { Link } from "react-router-dom";
 import { LOGO_URL } from "../../utlis/Links";
+import { useState, useEffect } from "react";
+
+import UseOnlineButton from "../../utlis/UseOnlineButton";
 
 function Header() {
+  const isOnline = UseOnlineButton();
   return (
     <nav className="navbar">
-      
-      <Link to="/"> <div className="logo-img">
-       <img
-          src={"https://ik.imagekit.io/1wuzjgiiiy/OIP.jpg"}
-          alt="logo-main"
-        />
-      </div></Link>
+      <Link to="/">
+        {" "}
+        <div className="logo-img">
+          <img
+            src={"https://ik.imagekit.io/1wuzjgiiiy/OIP.jpg"}
+            alt="logo-main"
+          />
+        </div>
+      </Link>
       <div className="search-bar">
         <input placeholder="Search for resturant" />
       </div>
       <div className="list">
         <ul>
+          {isOnline ? <li> 🟢 Online </li> : <li> 🛑 Offline </li>}
           <li>
             <Link to="/">Home</Link>
           </li>

@@ -5,9 +5,20 @@ import { Swiggy_URL } from "../../utlis/Links";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import UseBodyItems from "../../utlis/UseBodyItems";
+import UseOnlineButton from "../../utlis/UseOnlineButton";
 
 function Body() {
-  const hotellist=UseBodyItems()
+  const hotellist = UseBodyItems();
+  const isOnline = UseOnlineButton();
+  if (!isOnline) {
+    return (
+      <div className="body">
+        <h1 style={{ padding: "10vh 1.5rem", textAlign: "center" }}>
+          🔴 You are offline. Please check your internet connection.
+        </h1>
+      </div>
+    );
+  }
   if (!hotellist.length) {
     return <Shimmer />;
   }
