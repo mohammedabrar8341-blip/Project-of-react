@@ -1,14 +1,15 @@
 import MenuInfo from "./Menuinfo";
 import { useState } from "react";
 
-const Rescategory = ({ categoryInfo }) => {
+const Rescategory = ({ categoryInfo ,order,setIndex}) => {
   const title = categoryInfo?.title || "";
   const itemCards = categoryInfo?.itemCards || [];
 
-  const [isOpen, setIsOpen] = useState(false);
-
+  // const [isOpen, setIsOpen] = useState(false);
+let isOpen=order
   function toggleBody() {
-    setIsOpen(!isOpen);
+    // setIsOpen(!isOpen);
+    setIndex()
   }
 
   return (

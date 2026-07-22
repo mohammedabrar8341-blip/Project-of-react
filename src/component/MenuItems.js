@@ -3,19 +3,21 @@ import { Menu_URL } from "../../utlis/Links";
 import { useParams } from "react-router-dom";
 import RestaurantInfo from "./RestaurantInfo";
 import Rescategory from "./Rescategory";
-import UseMenuItems from "../../utlis/UseMenuItems"; "../../utlis/UseRestaurantMenu";
+import UseMenuItems from "../../utlis/UseMenuItems";
+("../../utlis/UseRestaurantMenu");
 
 const MenuItems = () => {
   const { resId } = useParams();
- const menu =UseMenuItems(resId)
+  const [showIndex, setShowIndex] = useState(null);
+  const menu = UseMenuItems(resId);
 
   if (menu == null) {
     return <div>loading....</div>;
   }
 
-  console.log("menu in menuitems", menu);
+  // console.log("menu in menuitems", menu);
 
-  console.log(menu?.data?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards);
+  // console.log(menu?.data?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards);
 
   const categories = (
     menu?.data?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards || []
@@ -28,7 +30,7 @@ const MenuItems = () => {
     );
   });
 
-  console.log("categories", categories);
+  // console.log("categories", categories);
 
   return (
     <div
@@ -39,8 +41,12 @@ const MenuItems = () => {
         paddingRight: "340px",
       }}
     >
-      {categories.map((category) => (
+      {categories.map((category, index) => (
         <Rescategory
+          setIndex={() => {
+            setShowIndex(index);
+          }}
+          order={index == showIndex ? true : false}
           key={category.card.card.categoryId}
           categoryInfo={category.card.card}
         />
