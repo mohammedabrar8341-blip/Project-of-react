@@ -1,6 +1,6 @@
 import { image_URL } from "../../utlis/Links";
 
-const MenuInfo = ({ details }) => {
+const MenuInfo = ({ details ,propData}) => {
   const name = details?.name || "";
   const imageId = details?.imageId;
   const description = details?.description || "";
@@ -19,6 +19,7 @@ const MenuInfo = ({ details }) => {
           {ratings?.aggregatedRating?.ratingCount ?? "-"})
         </p>
         <p>{description}</p>
+        <p>{propData}</p>
       </div>
 
       <div>

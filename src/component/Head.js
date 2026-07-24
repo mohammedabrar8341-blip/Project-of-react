@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import { LOGO_URL } from "../../utlis/Links";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import UseContext from "../../utlis/UseContext";
 
 import UseOnlineButton from "../../utlis/UseOnlineButton";
 
 function Header() {
+  const data = useContext(UseContext);
   const isOnline = UseOnlineButton();
   return (
     <nav className="navbar">
@@ -22,15 +24,15 @@ function Header() {
       </div>
       <div className="list">
         <ul>
-         {isOnline ? (
+          {isOnline ? (
             <li> 🟢 Online </li>
           ) : (
             <li className="red"> 🛑 Offline </li>
           )}
-            <li>
+          <li>
             <Link to={"/grocery "}>Grocery</Link>
           </li>
-         
+
           <li>
             <Link to="/">Home</Link>
           </li>
@@ -40,10 +42,11 @@ function Header() {
           <li>
             <Link to="/contact">Contact</Link>
           </li>
-       
+
           <li>
             <Link to="/cart">Cart</Link>
           </li>
+          <li>{data.name}</li>
         </ul>
       </div>
     </nav>

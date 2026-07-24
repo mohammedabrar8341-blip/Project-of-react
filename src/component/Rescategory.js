@@ -1,7 +1,7 @@
 import MenuInfo from "./Menuinfo";
 import { useState } from "react";
 
-const Rescategory = ({ categoryInfo ,order,setIndex}) => {
+const Rescategory = ({ categoryInfo ,order,setIndex,propData}) => {
   const title = categoryInfo?.title || "";
   const itemCards = categoryInfo?.itemCards || [];
 
@@ -25,7 +25,9 @@ let isOpen=order
         <div className="category-body">
           {itemCards.map((singleMenu, idx) => {
             const details = singleMenu?.card?.info || {};
-            return <MenuInfo details={details} key={details.id || idx} />;
+            return <MenuInfo
+            propData={propData}
+            details={details} key={details.id || idx} />;
           })}
         </div>
       ) : (

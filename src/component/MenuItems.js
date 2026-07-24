@@ -7,8 +7,9 @@ import UseMenuItems from "../../utlis/UseMenuItems";
 ("../../utlis/UseRestaurantMenu");
 
 const MenuItems = () => {
+  const impData ="Try this "
   const { resId } = useParams();
-  const [showIndex, setShowIndex] = useState(null);
+  const [showIndex, setShowIndex] = useState(1);
   const menu = UseMenuItems(resId);
 
   if (menu == null) {
@@ -43,8 +44,9 @@ const MenuItems = () => {
     >
       {categories.map((category, index) => (
         <Rescategory
+        propData={impData}
           setIndex={() => {
-            setShowIndex(index);
+            setShowIndex(index==showIndex?null:index);
           }}
           order={index == showIndex ? true : false}
           key={category.card.card.categoryId}
