@@ -44,7 +44,25 @@ function Header() {
         </div>
       </Link>
       <div className="search-bar">
-        <input placeholder="Search for resturant" />
+        <input
+        type="text"
+          placeholder="Search for resturant"
+          onKeyDown={(e) => {
+            // console.log(e.target.value);
+            const filteredList = allItems.filter((restaurant) => {
+              if (
+                restaurant.info.name
+                  .toLowerCase()
+                  .includes(e.target.value.toLowerCase()) == true
+              ) {
+                return true;
+              } else {
+                return false;
+              }
+            });
+            setHotelList(filteredList);
+          }}
+        />
       </div>
       <div className="list">
         <ul>
