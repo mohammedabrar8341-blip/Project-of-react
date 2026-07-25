@@ -1,12 +1,14 @@
-import RestaurantCard from "./RestaurantCard";
+import  RestaurantCard,{ withDiscountLable } from "./RestaurantCard";
 import { Shimmer } from "./Shimmer";
 import { useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import UseBodyItems from "../../utlis/UseBodyItems";
 import UseOnlineButton from "../../utlis/UseOnlineButton";
 import HotelListContext from "../../utlis/HotelListContext";
+import { withDiscountLable } from "./RestaurantCard";
 function Body() {
   const { hotelList, setHotelList, setAllItems } = useContext(HotelListContext);
+  const DiscountResCard = withDiscountLable(RestaurantCard);
   const fetchedRestaurants = UseBodyItems();
   const isOnline = UseOnlineButton();
 
@@ -39,7 +41,11 @@ function Body() {
         {hotelList?.map((resobj) => {
           return (
             <Link to={`/restaurant/${resobj.info.id}`} key={resobj.info.id}>
-              <RestaurantCard resDetail={resobj?.info} />
+              {resobj?.info?.aggregatedDiscountInfoV3 ? (
+                <DiscountResCard resDetail={resobj.info} />
+              ) : (
+                <RestaurantCard resDetail={resobj?.info} />
+              )}
             </Link>
           );
         })}

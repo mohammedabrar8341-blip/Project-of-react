@@ -79,7 +79,7 @@ function Header() {
             <li className="red"> 🛑 Offline </li>
           )}
           <li>
-            <Link to={"/grocery "}>Grocery</Link>
+            <Link to="/grocery">Grocery</Link>
           </li>
 
           <li>
