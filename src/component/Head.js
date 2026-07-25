@@ -2,11 +2,35 @@ import { Link } from "react-router-dom";
 import { LOGO_URL } from "../../utlis/Links";
 import { useState, useEffect, useContext } from "react";
 import UseContext from "../../utlis/UseContext";
+import HotelListContext from "../../utlis/HotelListContext";
 
 import UseOnlineButton from "../../utlis/UseOnlineButton";
 
 function Header() {
   const data = useContext(UseContext);
+
+  const { hotelList, setHotelList, allItems } = useContext(HotelListContext);
+  const [filterToggle, setFilterToggle] = useState(false);
+  function setFilter() {
+    console.log("button clicked");
+    // setHotelList(null)
+    if (!filterToggle) {
+      const filteredArray = hotelList.filter((restaurant) => {
+        if (restaurant.info.avgRating > 4.3) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+
+      setHotelList(filteredArray);
+      setFilterToggle(!filterToggle);
+    } else {
+      setHotelList(allItems);
+      setFilterToggle(!filterToggle);
+    }
+  }
+
   const isOnline = UseOnlineButton();
   return (
     <nav className="navbar">
@@ -24,6 +48,13 @@ function Header() {
       </div>
       <div className="list">
         <ul>
+          <li>
+            <button className="filter-btn " onClick={setFilter}>
+              {filterToggle
+                ? "Show All Restaurants"
+                : "Filter Top Rated Restaurants"}
+            </button>
+          </li>
           {isOnline ? (
             <li> 🟢 Online </li>
           ) : (

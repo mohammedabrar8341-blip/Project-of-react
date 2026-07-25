@@ -1,15 +1,22 @@
 import RestaurantCard from "./RestaurantCard";
-import { restaurantsArr } from "../../utlis/RestaurantArr";
 import { Shimmer } from "./Shimmer";
-import { Swiggy_URL } from "../../utlis/Links";
-import { useEffect, useState } from "react";
+import { useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import UseBodyItems from "../../utlis/UseBodyItems";
 import UseOnlineButton from "../../utlis/UseOnlineButton";
-
+import HotelListContext from "../../utlis/HotelListContext";
 function Body() {
-  const hotellist = UseBodyItems();
+  const { hotelList, setHotelList, setAllItems } = useContext(HotelListContext);
+  const fetchedRestaurants = UseBodyItems();
   const isOnline = UseOnlineButton();
+
+  useEffect(() => {
+    if (fetchedRestaurants?.length) {
+      setHotelList(fetchedRestaurants);
+      setAllItems(fetchedRestaurants);
+    }
+  }, [fetchedRestaurants, setHotelList, setAllItems]);
+
   if (!isOnline) {
     return (
       <div className="body">
@@ -19,7 +26,7 @@ function Body() {
       </div>
     );
   }
-  if (!hotellist.length) {
+  if (!hotelList?.length) {
     return <Shimmer />;
   }
   return (
@@ -29,7 +36,7 @@ function Body() {
         {/* <button onClick={getData}>Get data</button>{" "} */}
         {/* {restaurantsArr.map((resObj) => {
              return <RestaurantCard resDetail={resObj} key={resObj.id} />; })} */}
-        {hotellist?.map((resobj) => {
+        {hotelList?.map((resobj) => {
           return (
             <Link to={`/restaurant/${resobj.info.id}`} key={resobj.info.id}>
               <RestaurantCard resDetail={resobj?.info} />
