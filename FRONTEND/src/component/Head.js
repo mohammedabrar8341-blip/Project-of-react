@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import { LOGO_URL } from "../../utlis/Links";
+import { LOGO_URL } from "../utlis/Links";
 import { useState, useEffect, useContext } from "react";
-import UseContext from "../../utlis/UseContext";
-import HotelListContext from "../../utlis/HotelListContext";
+import UseContext from "../utlis/UseContext";
+import HotelListContext from "../utlis/HotelListContext";
 
-import UseOnlineButton from "../../utlis/UseOnlineButton";
+import UseOnlineButton from "../utlis/UseOnlineButton";
 
 function Header() {
   const data = useContext(UseContext);
@@ -45,7 +45,7 @@ function Header() {
       </Link>
       <div className="search-bar">
         <input
-        type="text"
+          type="text"
           placeholder="Search for resturant"
           onKeyDown={(e) => {
             // console.log(e.target.value);

@@ -1,4 +1,4 @@
-import UseContext from "../../utlis/UseContext";
+import UseContext from "../utlis/UseContext";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 
