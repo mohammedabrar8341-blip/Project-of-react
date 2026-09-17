@@ -4,6 +4,7 @@ import cors from "cors";
 import connectDB from "./db.js";
 import Restaurant from "./Model/Restaurant.js";
 import MenuItem from "./Model/MenuItem.js";
+import Order from "./Model/Order.js";
 
 dotenv.config();
 
@@ -120,6 +121,61 @@ app.get("/api/menu/:restaurantId", async (req, res) => {
     res.status(500).json({
       message: "Failed to fetch menu",
     });
+  }
+});
+
+app.post("/api/orders", async (req, res) => {
+  try {
+    const {
+      customerName,
+      customerEmail,
+      items,
+      totalItems,
+      totalAmount,
+      paymentMethod,
+      paymentStatus,
+    } = req.body;
+
+    if (
+      !customerName ||
+      !customerEmail ||
+      !Array.isArray(items) ||
+      items.length === 0 ||
+      !paymentMethod
+    ) {
+      return res.status(400).json({
+        message: "Customer details, items, and payment method are required",
+      });
+    }
+
+    const order = await Order.create({
+      customerName,
+      customerEmail,
+      items,
+      totalItems,
+      totalAmount,
+      paymentMethod,
+      paymentStatus: paymentStatus === "PAID" ? "PAID" : "PENDING",
+      orderStatus: "PLACED",
+    });
+
+    res.status(201).json({
+      message: "Order received",
+      order,
+    });
+  } catch (error) {
+    console.error("Order creation error:", error);
+    res.status(500).json({ message: "Failed to create order" });
+  }
+});
+
+app.get("/api/orders", async (req, res) => {
+  try {
+    const orders = await Order.find().sort({ createdAt: -1 });
+    res.status(200).json(orders);
+  } catch (error) {
+    console.error("Order fetch error:", error);
+    res.status(500).json({ message: "Failed to fetch orders" });
   }
 });
 

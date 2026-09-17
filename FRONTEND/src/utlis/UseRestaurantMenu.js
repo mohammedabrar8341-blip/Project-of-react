@@ -1,6 +1,5 @@
-import { Menu_URL } from "./Links";
 import { useState, useEffect } from "react";
-const UseRestaurantMenu= (resId) => {
+const UseRestaurantMenu = (resId) => {
   const [menu, setMenu] = useState(null);
   const [error, setError] = useState(null);
 
@@ -10,7 +9,7 @@ const UseRestaurantMenu= (resId) => {
 
   const getDataRes = async () => {
     try {
-      const response = await fetch(Menu_URL + resId);
+      const response = await fetch(`http://localhost:8080/api/menu/${resId}`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -18,7 +17,7 @@ const UseRestaurantMenu= (resId) => {
       setMenu(data);
       setError(null);
     } catch (err) {
-      console.error("Failed to fetch menu:", err);
+      console.log("Failed to fetch menu:", err);
       setError(err.message);
       setMenu(null);
     }

@@ -19,7 +19,7 @@ const UseMenuItems = (resId) => {
 
         const data = await response.json();
 
-        console.log("MongoDB menu:", data);
+        // console.log("MongoDB menu:", data);
 
         setMenu(data);
       } catch (error) {

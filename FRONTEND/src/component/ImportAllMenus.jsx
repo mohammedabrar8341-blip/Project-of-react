@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Menu_URL } from "../utlis/Links";
 
 const ImportAllMenus = () => {
   const [status, setStatus] = useState("Starting...");
@@ -30,41 +29,26 @@ const ImportAllMenus = () => {
             `Fetching menu for ${restaurant.resName} (${restaurant.id})`
           );
 
-          // Get menu from Swiggy through browser
-          const response = await fetch(Menu_URL + restaurant.id);
+          // Read the menu already stored in MongoDB.
+          const response = await fetch(
+            `http://localhost:8080/api/menu/${restaurant.id}`
+          );
 
           if (!response.ok) {
-            throw new Error(`Swiggy error: ${response.status}`);
+            throw new Error(`Menu error: ${response.status}`);
           }
 
           const menu = await response.json();
 
-          // Send menu to our backend
-          const saveResponse = await fetch(
-            "http://localhost:8080/api/menu/import",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                restaurantId: restaurant.id,
-                menu,
-              }),
-            }
-          );
-
-          const saveData = await saveResponse.json();
-
           console.log(
             `${restaurant.resName}:`,
-            saveData
+            menu
           );
 
           imported.push({
             restaurant: restaurant.resName,
-            count: saveData.count || 0,
-            status: saveData.message,
+            count: menu.length || 0,
+            status: "Menu loaded from MongoDB",
           });
 
           setResults([...imported]);

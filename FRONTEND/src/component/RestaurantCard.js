@@ -1,3 +1,5 @@
+import { image_URL } from "../utlis/Links";
+
 const RestaurantCard = ({ resDetail }) => {
   const {
     resName,
@@ -9,11 +11,9 @@ const RestaurantCard = ({ resDetail }) => {
     location,
   } = resDetail;
 
-  // Your MongoDB imgId can be either a complete Swiggy image path
-  // or a normal Swiggy image ID.
   const imageUrl = imgId?.startsWith("http")
     ? imgId
-    : `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/${imgId}`;
+    : image_URL + imgId;
 
   return (
     <div className="res-card">

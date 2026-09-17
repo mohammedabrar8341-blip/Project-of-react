@@ -1,6 +1,9 @@
 import { image_URL } from "../utlis/Links";
+import { useContext } from "react";
+import CartContext from "../utlis/CartContext";
 
 const MenuInfo = ({ details, propData }) => {
+  const { addItem } = useContext(CartContext);
   const name = details?.name || "";
   const imageId = details?.imageId || "";
   const description = details?.description || "";
@@ -12,11 +15,9 @@ const MenuInfo = ({ details, propData }) => {
   return (
     <div className="menu-item-card">
       <div>
-        <h1>{name}</h1>
+        <h3>{name}</h3>
 
-        <p>
-          Price: {price !== null ? `₹${price}` : "N/A"}
-        </p>
+        <p>Price: {price !== null ? `₹${price}` : "N/A"}</p>
 
         <p>
           ⭐️ {rating} ({ratingCount})
@@ -29,14 +30,12 @@ const MenuInfo = ({ details, propData }) => {
 
       <div>
         {imageId && (
-          <img
-            alt={name}
-            className="menu-item-img"
-            src={image_URL + imageId}
-          />
+          <img alt={name} className="menu-item-img" src={image_URL + imageId} />
         )}
 
-        <button className="add-btn">ADD</button>
+        <button className="add-btn" onClick={() => addItem(details)}>
+          ADD
+        </button>
       </div>
     </div>
   );

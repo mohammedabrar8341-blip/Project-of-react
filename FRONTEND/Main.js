@@ -12,6 +12,9 @@ import { Signin } from "./src/component/Signin";
 import { Siginup } from "./src/component/Signup";
 import ResturantPage from "./src/component/Restaurantmenupage";
 import { lazy, Suspense } from "react";
+import { CartProvider } from "./src/utlis/CartContext";
+import Payment from "./src/component/Payment";
+import OrderSuccess from "./src/component/OrderSuccess";
 
 const Grocery = lazy(() => import("./src/component/Grocery "));
 const appRouter = createBrowserRouter([
@@ -30,6 +33,14 @@ const appRouter = createBrowserRouter([
       {
         path: "/cart",
         element: <Carts />,
+      },
+      {
+        path: "/payment",
+        element: <Payment />,
+      },
+      {
+        path: "/order-success",
+        element: <OrderSuccess />,
       },
       {
         path: "/about",
@@ -67,4 +78,8 @@ const appRouter = createBrowserRouter([
 ]);
 const root = createRoot(document.querySelector(".root"));
 // root.render(<App />);
-root.render(<RouterProvider router={appRouter} />);
+root.render(
+  <CartProvider>
+    <RouterProvider router={appRouter} />
+  </CartProvider>
+);

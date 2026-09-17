@@ -49,8 +49,8 @@ const MenuItems = () => {
     })
   );
 
-  console.log("MongoDB menu:", menu);
-  console.log("Categories:", categories);
+  // console.log("MongoDB menu:", menu);
+  // console.log("Categories:", categories);
 
   return (
     <div

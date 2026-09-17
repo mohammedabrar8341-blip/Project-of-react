@@ -1,83 +1,57 @@
 import { image_URL } from "../utlis/Links";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 
-const RestaurantInfo = () => {
-  const { resId } = useParams();
-
-  const [restaurant, setRestaurant] = useState(null);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const getRestaurant = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:8080/api/restaurants/${resId}`
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch restaurant");
-        }
-
-        const data = await response.json();
-
-        console.log("MongoDB restaurant:", data);
-
-        setRestaurant(data);
-      } catch (error) {
-        console.error("Restaurant fetch error:", error);
-        setError(error.message);
-      }
-    };
-
-    getRestaurant();
-  }, [resId]);
-
-  if (restaurant === null) {
-    if (error) {
-      return <h2>Failed to load restaurant</h2>;
-    }
-
-    return <div>Loading restaurant...</div>;
-  }
+const RestaurantInfo = ({ restaurant }) => {
+  const {
+    resName = "Restaurant",
+    avgRating,
+    costForTwo,
+    cuisine,
+    location,
+    delieveryTime,
+    imgId,
+  } = restaurant;
 
   return (
     <div className="restaurant-info">
       <div className="menu-info-div">
-        <h1>{restaurant.resName}</h1>
+        <h1>{resName}</h1>
       </div>
 
       <div className="res-menu-img">
         <img
           className="menu-info-img"
-          src={image_URL + restaurant.imgId}
-          alt={restaurant.resName}
+          src={imgId ? image_URL + imgId : undefined}
+          alt={resName}
         />
       </div>
 
       <div className="menu-details">
         <div className="rating-row">
           <span className="rating">
-            ⭐ {restaurant.avgRating}
+            ⭐ {avgRating ?? "Rating unavailable"}
           </span>
 
           <span className="cost">
-            {restaurant.costForTwo}
+            {costForTwo || "Cost unavailable"}
           </span>
         </div>
 
         <p className="cuisines">
-          {restaurant.cuisine?.join(", ")}
+          {Array.isArray(cuisine) && cuisine.length
+            ? cuisine.join(", ")
+            : "Cuisine unavailable"}
         </p>
 
         <div className="location">
           <p>
-            <strong>Outlet</strong> • {restaurant.location}
+            <strong>Outlet</strong> • {location || "Location unavailable"}
           </p>
         </div>
 
         <p className="delivery-time">
-          🚴 {restaurant.deliveryTime} mins
+          🚴 {delieveryTime != null
+            ? `${delieveryTime} mins`
+            : "Delivery time unavailable"}
         </p>
       </div>
     </div>
