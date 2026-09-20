@@ -13,25 +13,60 @@ function Header() {
 
   const { hotelList, setHotelList, allItems } = useContext(HotelListContext);
   const [filterToggle, setFilterToggle] = useState(false);
-  function setFilter() {
-    console.log("button clicked");
-    // setHotelList(null)
-    if (!filterToggle) {
-      const filteredArray = hotelList.filter((restaurant) => {
-        if (restaurant.info.avgRating > 4.3) {
-          return true;
-        } else {
-          return false;
-        }
-      });
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
-      setHotelList(filteredArray);
-      setFilterToggle(!filterToggle);
-    } else {
-      setHotelList(allItems);
-      setFilterToggle(!filterToggle);
-    }
+  const restaurants = Array.isArray(allItems) ? allItems : [];
+
+  function getSearchText(restaurant) {
+    const cuisines = Array.isArray(restaurant.cuisine)
+      ? restaurant.cuisine.join(" ")
+      : restaurant.cuisine || "";
+
+    return [restaurant.resName, cuisines, restaurant.location]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
   }
+
+  function filterRestaurants(query, topRated) {
+    const normalizedQuery = query.trim().toLowerCase();
+
+    const filteredArray = restaurants.filter((restaurant) => {
+      const matchesSearch = !normalizedQuery ||
+        getSearchText(restaurant).includes(normalizedQuery);
+      const matchesRating = !topRated || Number(restaurant.avgRating) >= 4.3;
+
+      return matchesSearch && matchesRating;
+    });
+
+    setHotelList(filteredArray);
+  }
+
+  function handleSearch(event) {
+    const nextQuery = event.target.value;
+    setSearchQuery(nextQuery);
+    setShowSuggestions(nextQuery.trim().length > 0);
+    filterRestaurants(nextQuery, filterToggle);
+  }
+
+  function selectSuggestion(restaurantName) {
+    setSearchQuery(restaurantName);
+    setShowSuggestions(false);
+    filterRestaurants(restaurantName, filterToggle);
+  }
+
+  function setFilter() {
+    const nextFilterState = !filterToggle;
+    setFilterToggle(nextFilterState);
+    filterRestaurants(searchQuery, nextFilterState);
+  }
+
+  const suggestions = restaurants
+    .filter((restaurant) =>
+      getSearchText(restaurant).includes(searchQuery.trim().toLowerCase())
+    )
+    .slice(0, 6);
 
   const isOnline = UseOnlineButton();
   return (
@@ -48,23 +83,33 @@ function Header() {
       <div className="search-bar">
         <input
           type="text"
-          placeholder="Search for resturant"
-          onKeyDown={(e) => {
-            // console.log(e.target.value);
-            const filteredList = allItems.filter((restaurant) => {
-              if (
-                restaurant.info.name
-                  .toLowerCase()
-                  .includes(e.target.value.toLowerCase()) == true
-              ) {
-                return true;
-              } else {
-                return false;
-              }
-            });
-            setHotelList(filteredList);
-          }}
+          value={searchQuery}
+          placeholder="Search restaurants or cuisines"
+          onChange={handleSearch}
+          onFocus={() => searchQuery.trim() && setShowSuggestions(true)}
         />
+        {showSuggestions && searchQuery.trim() && suggestions.length > 0 && (
+          <div className="search-suggestions">
+            {suggestions.map((restaurant) => (
+              <button
+                type="button"
+                className="search-suggestion"
+                key={restaurant.id}
+                onMouseDown={() => selectSuggestion(restaurant.resName)}
+              >
+                <span className="suggestion-icon">⌕</span>
+                <span>
+                  <strong>{restaurant.resName}</strong>
+                  <small>
+                    {Array.isArray(restaurant.cuisine)
+                      ? restaurant.cuisine.slice(0, 3).join(", ")
+                      : "Restaurant"}
+                  </small>
+                </span>
+              </button>
+            ))}
+          </div>
+        )}
       </div>
       <div className="list">
         <ul>

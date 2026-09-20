@@ -26,29 +26,22 @@ const RestaurantCard = ({ resDetail }) => {
       </div>
 
       <div className="res-card-content">
-        <h4 className="res-title">{resName}</h4>
+        <h2 className="res-title">{resName}</h2>
 
         <p className="cus-nam">
           {Array.isArray(cuisine) ? cuisine.join(", ") : "Various cuisines"}
         </p>
 
         <div className="res-info">
-          <span>💰 {costForTwo || "Cost info"}</span>
-          <span>📍 {location || "Location"}</span>
+          <span>⭐ {avgRating || "New"}</span>
+          <span>• {delieveryTime || "--"} mins</span>
+        </div>
+
+        <div className="res-card-footer">
+          <span>{costForTwo || "Cost info"}</span>
+          <span>{location || "Location"}</span>
         </div>
       </div>
-
-      <h3 className="res-title">{resName}</h3>
-
-      <h4>{Array.isArray(cuisine) ? cuisine.join(", ") : cuisine}</h4>
-
-      <h4>⭐️ {avgRating} Stars</h4>
-
-      <h4>
-        📍 {delieveryTime} mins | {costForTwo}
-      </h4>
-
-      <h4>{location}</h4>
     </div>
   );
 };
