@@ -5,16 +5,17 @@ import RestaurantCard from "./src/component/RestaurantCard";
 import Footer from "./src/component/Footer";
 import Body from "./src/component/Body";
 import { Outlet } from "react-router";
-import UseContext from "./utlis/UseContext";
+import UseContext from "./src/utlis/UseContext";
 import { useState, useEffect } from "react";
-import HotelListContext from "./utlis/HotelListContext";
+import HotelListContext from "./src/utlis/HotelListContext";
+import ImportAllMenus from "./src/component/ImportAllMenus";
 
 const App = () => {
   const [username, setUsername] = useState();
   const [email, setemail] = useState();
 
-  const [allitems,setAllItems]=useState(null);// master copy
-  const [hotellist,setHotellist]=useState(null);// UI copy
+  const [allitems, setAllItems] = useState(null); // master copy
+  const [hotellist, setHotellist] = useState(null); // UI copy
   //authentication
   useEffect(() => {
     const randomTrue = Math.random() < 0.3;
@@ -34,13 +35,21 @@ const App = () => {
   return (
     <div>
       <UseContext.Provider value={{ name: username, email: email }}>
-       <HotelListContext.Provider value={{ hotelList: hotellist, setHotelList: setHotellist, setAllItems, allItems: allitems }}>
-         <Header />
-        {/* <Img /> */}
-        <Outlet />
-        {/* <Body /> */}
-        <Footer />
-       </HotelListContext.Provider>
+        <HotelListContext.Provider
+          value={{
+            hotelList: hotellist,
+            setHotelList: setHotellist,
+            setAllItems,
+            allItems: allitems,
+          }}
+        >
+          <Header />
+          {/* <Img /> */}
+          <Outlet />
+          {/* <Body /> */}
+          <Footer />
+          {/* <ImportAllMenus /> */}
+        </HotelListContext.Provider>
       </UseContext.Provider>
     </div>
   );

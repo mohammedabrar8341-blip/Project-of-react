@@ -735,6 +735,31 @@ body {
   cursor: pointer;
 }
 
+.category-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.category-add-btn {
+  min-width: 92px;
+  padding: 8px 12px;
+  border: 1px solid #1ba672;
+  border-radius: 8px;
+  background: #fff;
+  color: #1ba672;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.category-add-btn:hover {
+  background: #1ba672;
+  color: #fff;
+}
+
 .arrow {
   transition: 0.3s;
   font-size: 18px;
@@ -882,6 +907,16 @@ body {
   .category-header {
     font-size: 18px;
   }
+
+  .category-actions {
+    gap: 8px;
+  }
+
+  .category-add-btn {
+    min-width: 78px;
+    padding: 7px 8px;
+    font-size: 11px;
+  }
 }
 
 /* online button */
@@ -906,4 +941,113 @@ body {
 .filter-btn:hover {
   background-color: #e65c00;
   transition: ease-in-out 0.1s;
+}
+
+.checkout-form {
+  display: grid;
+  gap: 12px;
+  max-width: 480px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid #e9e9eb;
+}
+
+.checkout-form input:not([type="checkbox"]),
+.checkout-form select {
+  padding: 12px;
+  border: 1px solid #d4d5d9;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+.payment-box {
+  padding: 16px;
+  border: 1px solid #e0d2f7;
+  border-radius: 8px;
+  background: #faf7ff;
+}
+
+.payment-box label {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 12px;
+  font-weight: 600;
+}
+
+.place-order-btn {
+  padding: 13px 18px;
+  border: 0;
+  border-radius: 8px;
+  background: #1ba672;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.place-order-btn:disabled {
+  background: #a9b5af;
+  cursor: not-allowed;
+}
+
+.order-message {
+  color: #116649;
+  font-weight: 600;
+}
+
+.payment-page,
+.order-success-page {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+.payment-page > h1,
+.order-success-page > h1 {
+  color: #282c3f;
+}
+
+.payment-card {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  margin-top: 24px;
+  padding: 28px;
+  border: 1px solid #e9e9eb;
+  border-radius: 12px;
+  background: #fff;
+  text-align: center;
+  box-shadow: 0 4px 18px rgba(40, 44, 63, 0.08);
+}
+
+.phonepe-qr {
+  width: min(320px, 80vw);
+  height: auto;
+  object-fit: contain;
+}
+
+.payment-confirmation {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.payment-note {
+  color: #686b78;
+  font-size: 14px;
+}
+
+.order-error {
+  color: #c0392b;
+  font-weight: 600;
+}
+
+.order-success-page {
+  max-width: 720px;
+}
+
+.order-success-page li {
+  margin: 8px 0;
 }

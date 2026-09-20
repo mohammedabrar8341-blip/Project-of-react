@@ -1,9 +1,11 @@
 import MenuInfo from "./Menuinfo";
-import { useState } from "react";
+import { useContext } from "react";
+import CartContext from "../utlis/CartContext";
 
 const Rescategory = ({ categoryInfo ,order,setIndex,propData}) => {
   const title = categoryInfo?.title || "";
   const itemCards = categoryInfo?.itemCards || [];
+  const { addItem } = useContext(CartContext);
 
   // const [isOpen, setIsOpen] = useState(false);
 let isOpen=order
@@ -12,13 +14,32 @@ let isOpen=order
     setIndex()
   }
 
+  function addCategoryItems(event) {
+    event.stopPropagation();
+    itemCards.forEach((singleMenu) => {
+      const details = singleMenu?.card?.info;
+      if (details) {
+        addItem(details);
+      }
+    });
+  }
+
   return (
     <div className="category-accordian">
       <div className="category-header" onClick={toggleBody}>
         <span>
           {title} ({itemCards.length})
         </span>
-      <span className={isOpen ? "arrow open" : "arrow"}>▼</span>
+        <div className="category-actions">
+          <button
+            className="category-add-btn"
+            type="button"
+            onClick={addCategoryItems}
+          >
+            ADD ALL
+          </button>
+          <span className={isOpen ? "arrow open" : "arrow"}>▼</span>
+        </div>
       </div>
 
       {isOpen ? (

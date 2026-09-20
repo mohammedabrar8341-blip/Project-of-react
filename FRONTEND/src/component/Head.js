@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
-import { LOGO_URL } from "../../utlis/Links";
+import { LOGO_URL } from "../utlis/Links";
 import { useState, useEffect, useContext } from "react";
-import UseContext from "../../utlis/UseContext";
-import HotelListContext from "../../utlis/HotelListContext";
+import UseContext from "../utlis/UseContext";
+import HotelListContext from "../utlis/HotelListContext";
+import CartContext from "../utlis/CartContext";
 
-import UseOnlineButton from "../../utlis/UseOnlineButton";
+import UseOnlineButton from "../utlis/UseOnlineButton";
 
 function Header() {
   const data = useContext(UseContext);
+  const { totalItems } = useContext(CartContext);
 
   const { hotelList, setHotelList, allItems } = useContext(HotelListContext);
   const [filterToggle, setFilterToggle] = useState(false);
@@ -45,7 +47,7 @@ function Header() {
       </Link>
       <div className="search-bar">
         <input
-        type="text"
+          type="text"
           placeholder="Search for resturant"
           onKeyDown={(e) => {
             // console.log(e.target.value);
@@ -93,7 +95,7 @@ function Header() {
           </li>
 
           <li>
-            <Link to="/cart">Cart</Link>
+            <Link to="/cart">Cart ({totalItems})</Link>
           </li>
           <li>{data.name}</li>
         </ul>
